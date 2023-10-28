@@ -19,9 +19,7 @@ public class Vector2d {
 
     @Override
     public String toString(){
-        String xString = String.valueOf(x);
-        String yString = String.valueOf(y);
-        return "("+xString+","+yString+")";
+        return "("+x+","+y+")";
     }
 
     public boolean precedes(Vector2d other){

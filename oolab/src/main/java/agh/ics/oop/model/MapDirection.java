@@ -5,6 +5,7 @@ public enum MapDirection {
     EAST,
     SOUTH,
     WEST;
+
     @Override
     public String toString() {
         return switch (this) {
@@ -15,20 +16,12 @@ public enum MapDirection {
         };
     }
     public MapDirection next(){
-        return switch(this){
-            case NORTH -> EAST;
-            case SOUTH -> WEST;
-            case EAST -> SOUTH;
-            case WEST -> NORTH;
-        };
+        MapDirection[] values = MapDirection.values();
+        return values[(this.ordinal()+1)%4];
     }
     public MapDirection previous(){
-        return switch(this){
-            case NORTH -> WEST;
-            case SOUTH -> EAST;
-            case EAST -> NORTH;
-            case WEST -> SOUTH;
-        };
+        MapDirection[] values = MapDirection.values();
+        return values[(this.ordinal()+3)%4];
     }
     public Vector2d toUnitVector(){
         return switch(this){
