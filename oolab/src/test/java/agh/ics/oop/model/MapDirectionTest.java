@@ -5,14 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MapDirectionTest {
     @Test
-    public void Testnext(){
+    public void TestNext(){
         assertEquals(EAST, NORTH.next() );
         assertEquals(SOUTH, EAST.next() );
         assertEquals(WEST, SOUTH.next() );
         assertEquals(NORTH, WEST.next() );
     }
     @Test
-    public void Testprevious(){
+    public void TestPrevious(){
         assertEquals(EAST, SOUTH.previous() );
         assertEquals(SOUTH, WEST.previous() );
         assertEquals(WEST, NORTH.previous() );

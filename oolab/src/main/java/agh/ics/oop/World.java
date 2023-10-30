@@ -5,8 +5,11 @@ import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class World {
+    public static final Vector2d WORLD_LOWER_LEFT = new Vector2d(0,0);
+    public static final  Vector2d WORLD_UPPER_RIGHT = new Vector2d(4,4);
     public static void runOld (MoveDirection[] args) {
         for (MoveDirection direction : args){
             switch (direction){
@@ -28,15 +31,9 @@ public class World {
         }
     }
     public static void main(String[] args){
-        run(OptionsParser.change(args));
-        Animal smakus = new Animal();
-        System.out.println(smakus);
-        System.out.println(smakus.isAt(new Vector2d(4,2)));
-        smakus.move(MoveDirection.RIGHT);
-        System.out.println(smakus);
-        smakus.move(MoveDirection.BACKWARD);
-        System.out.println(smakus);
+        ArrayList<MoveDirection> directions = OptionsParser.change(args);
+        ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4)));
+        Simulation simulation = new Simulation(directions,positions);
+        simulation.run();
     }
-
-
 }
