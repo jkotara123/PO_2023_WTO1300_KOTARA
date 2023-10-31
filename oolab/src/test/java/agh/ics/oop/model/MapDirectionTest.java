@@ -1,33 +1,21 @@
 package agh.ics.oop.model;
-
-import agh.ics.oop.model.MapDirection;
 import org.junit.jupiter.api.Test;
+import static agh.ics.oop.model.MapDirection.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MapDirectionTest {
     @Test
-    public void Testnext(){
-        MapDirection north = MapDirection.NORTH;
-        MapDirection south = MapDirection.SOUTH;
-        MapDirection east = MapDirection.EAST;
-        MapDirection west = MapDirection.WEST;
-
-        assertEquals(east, north.next() );
-        assertEquals(south, east.next() );
-        assertEquals(west, south.next() );
-        assertEquals(north, west.next() );
+    public void TestNext(){
+        assertEquals(EAST, NORTH.next() );
+        assertEquals(SOUTH, EAST.next() );
+        assertEquals(WEST, SOUTH.next() );
+        assertEquals(NORTH, WEST.next() );
     }
     @Test
-    public void Testprevious(){
-
-        MapDirection north = MapDirection.NORTH;
-        MapDirection south = MapDirection.SOUTH;
-        MapDirection east = MapDirection.EAST;
-        MapDirection west = MapDirection.WEST;
-
-        assertEquals(east, south.previous() );
-        assertEquals(south, west.previous() );
-        assertEquals(west, north.previous() );
-        assertEquals(north, east.previous() );
+    public void TestPrevious(){
+        assertEquals(EAST, SOUTH.previous() );
+        assertEquals(SOUTH, WEST.previous() );
+        assertEquals(WEST, NORTH.previous() );
+        assertEquals(NORTH, EAST.previous() );
     }
 }

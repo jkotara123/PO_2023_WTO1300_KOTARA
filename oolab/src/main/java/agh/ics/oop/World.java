@@ -1,23 +1,16 @@
 package agh.ics.oop;
 
-public class World {
+import agh.ics.oop.model.Animal;
+import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.Vector2d;
 
-    /*
-    public static void run1(String[] args) {
-        int n = args.length;
-        for(int i=0;i<n-1;i++) System.out.print(args[i]+", ");
-        System.out.println(args[n-1]);
-    }
-    public static void run2(String[] args){
-        for(String arg : args){
-            if (arg.equals("f")) System.out.println("Zwierzak idzie do przodu");
-            if (arg.equals("b")) System.out.println("Zwierzak idzie do tyłu");
-            if (arg.equals("l")) System.out.println("Zwierzak skręca w lewo");
-            if (arg.equals("r")) System.out.println("Zwierzak skręca w prawo");
-        }
-    }
-    */
-    public static void run (MoveDirection[] args) {
+import java.util.ArrayList;
+import java.util.List;
+
+public class World {
+    public static final Vector2d WORLD_LOWER_LEFT = new Vector2d(0,0);
+    public static final  Vector2d WORLD_UPPER_RIGHT = new Vector2d(4,4);
+    public static void runOld (MoveDirection[] args) {
         for (MoveDirection direction : args){
             switch (direction){
                 case FORWARD -> System.out.println("Zwierzak idzie do przodu");
@@ -27,13 +20,20 @@ public class World {
             }
         }
     }
-    public static void main(String[] args){
-        System.out.println("system wystartował\n");
-        run(OptionsParser.change(args));
-//        run1(args);
-//        run2(args);
-        System.out.println("\nsystem zakończył działanie");
+    public static void run (ArrayList<MoveDirection> args){
+        for (MoveDirection arg : args) {
+            switch (arg) {
+                case FORWARD -> System.out.println("Zwierzak idzie do przodu");
+                case LEFT -> System.out.println("Zwierzak skręca w lewo");
+                case RIGHT -> System.out.println("Zwierzak skręca w prawo");
+                case BACKWARD -> System.out.println("Zwierezak idzie do tyłu");
+            }
+        }
     }
-
-
+    public static void main(String[] args){
+        ArrayList<MoveDirection> directions = OptionsParser.change(args);
+        ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4)));
+        Simulation simulation = new Simulation(directions,positions);
+        simulation.run();
+    }
 }
