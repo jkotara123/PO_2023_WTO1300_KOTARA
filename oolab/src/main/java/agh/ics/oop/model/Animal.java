@@ -5,18 +5,16 @@ import agh.ics.oop.World;
 public class Animal {
     private MapDirection orientation;
     private Vector2d position;
+    static final Vector2d DEFAULT_POSITION=new Vector2d(2,2);
 
     public Animal(Vector2d position){
         this.position=position;
         this.orientation=MapDirection.NORTH;
     }
     public Animal(){
-        this(new Vector2d(2,2));
+        this(DEFAULT_POSITION);
     }
 
-    public void setOrientation(MapDirection orientation) {
-        this.orientation = orientation;
-    }
     public MapDirection getOrientation() {
         return this.orientation;
     }

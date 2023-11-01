@@ -25,19 +25,17 @@ public class SimulationTest {
 
 
         simulation1.run();
-        ArrayList<Animal> animalList1 = simulation1.getAnimalList();
-        Assertions.assertTrue(animalList1.get(0).isAt(new Vector2d(3,0)));
-        Assertions.assertEquals(animalList1.get(0).getOrientation(), MapDirection.SOUTH);
-        Assertions.assertTrue(animalList1.get(1).isAt(new Vector2d(2,4)));
-        Assertions.assertEquals(animalList1.get(1).getOrientation(),MapDirection.NORTH);
+        Assertions.assertTrue(simulation1.getAnimal(0).isAt(new Vector2d(3,0)));
+        Assertions.assertEquals(simulation1.getAnimal(0).getOrientation(), MapDirection.SOUTH);
+        Assertions.assertTrue(simulation1.getAnimal(1).isAt(new Vector2d(2,4)));
+        Assertions.assertEquals(simulation1.getAnimal(1).getOrientation(),MapDirection.NORTH);
 
         simulation2.run();
-        ArrayList<Animal> animalList2 = simulation2.getAnimalList();
-        Assertions.assertTrue(animalList2.get(0).isAt(new Vector2d(3,3)));
-        Assertions.assertEquals(animalList2.get(0).getOrientation(),MapDirection.WEST);
-        Assertions.assertTrue(animalList2.get(1).isAt(new Vector2d(2,4)));
-        Assertions.assertEquals(animalList2.get(1).getOrientation(),MapDirection.EAST);
-        Assertions.assertTrue(animalList2.get(2).isAt(new Vector2d(4,3)));
-        Assertions.assertEquals(animalList2.get(2).getOrientation(),MapDirection.SOUTH);
+        Assertions.assertTrue(simulation2.getAnimal(0).isAt(new Vector2d(3,3)));
+        Assertions.assertEquals(simulation2.getAnimal(0).getOrientation(),MapDirection.WEST);
+        Assertions.assertTrue(simulation2.getAnimal(1).isAt(new Vector2d(2,4)));
+        Assertions.assertEquals(simulation2.getAnimal(1).getOrientation(),MapDirection.EAST);
+        Assertions.assertTrue(simulation2.getAnimal(2).isAt(new Vector2d(4,3)));
+        Assertions.assertEquals(simulation2.getAnimal(2).getOrientation(),MapDirection.SOUTH);
     }
 }

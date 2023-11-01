@@ -10,9 +10,10 @@ public class AnimalTest {
     public void TestToString(){
         Animal animalDefault = new Animal();
         Animal animal1 = new Animal(new Vector2d(2,5));
-        animal1.setOrientation(MapDirection.WEST);
+        animal1.move(MoveDirection.LEFT);
         Animal animal2 = new Animal(new Vector2d(1,0));
-        animal2.setOrientation(MapDirection.SOUTH);
+        animal2.move(MoveDirection.LEFT);
+        animal2.move(MoveDirection.LEFT);
 
         String resDefault = "Pozycja: (2,2) Zwrot: Północ";
         String res1 = "Pozycja: (2,5) Zwrot: Zachód";
@@ -28,30 +29,28 @@ public class AnimalTest {
         Animal animal1 = new Animal(new Vector2d(2,5));
         Animal animal2 = new Animal(new Vector2d(1,0));
 
-        Vector2d positionDefault = new Vector2d(2,2);
         Vector2d position1 = new Vector2d(2,5);
         Vector2d position2 = new Vector2d(1,0);
 
-        Assertions.assertTrue(animalDefault.isAt(positionDefault));
+        Assertions.assertTrue(animalDefault.isAt(Animal.DEFAULT_POSITION));
         Assertions.assertTrue(animal1.isAt(position1));
         Assertions.assertTrue(animal2.isAt(position2));
 
         Assertions.assertFalse(animalDefault.isAt(position1));
         Assertions.assertFalse(animal1.isAt(position2));
-        Assertions.assertFalse(animal2.isAt(positionDefault));
+        Assertions.assertFalse(animal2.isAt(Animal.DEFAULT_POSITION));
     }
     @Test
     public void TestCanMoveTo(){
         Animal animal = new Animal();
         Vector2d okayPosition1 = new Vector2d(3,4);
-        Vector2d okayPosition2 = new Vector2d(2,2);
         Vector2d wrongPosition1 = new Vector2d(0,-1);
         Vector2d wrongPosition2 = new Vector2d(-3,-2);
         Vector2d wrongPosition3 = new Vector2d(4,6);
         Vector2d wrongPosition4 = new Vector2d(9,4);
 
         Assertions.assertTrue(animal.canMoveTo(okayPosition1));
-        Assertions.assertTrue(animal.canMoveTo(okayPosition2));
+        Assertions.assertTrue(animal.canMoveTo(Animal.DEFAULT_POSITION));
         Assertions.assertTrue(animal.canMoveTo(World.WORLD_LOWER_LEFT));
         Assertions.assertTrue(animal.canMoveTo(World.WORLD_UPPER_RIGHT));
 
@@ -66,10 +65,10 @@ public class AnimalTest {
         Animal animalCannotGoForward=new Animal(new Vector2d(3,4));
         Animal animalGoForward1=new Animal();
         Animal animalGoForward2=new Animal();
-        animalGoForward2.setOrientation(MapDirection.WEST);
+        animalGoForward2.move(MoveDirection.LEFT);
         Animal animalGoBackward1=new Animal();
         Animal animalGoBackward2 = new Animal();
-        animalGoBackward2.setOrientation(MapDirection.EAST);
+        animalGoBackward2.move(MoveDirection.RIGHT);
         {
             animalTurn.move(MoveDirection.RIGHT);                                   //skrecanie w prawo
             Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.EAST);
