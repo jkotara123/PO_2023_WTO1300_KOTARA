@@ -8,16 +8,17 @@ public class AnimalTest {
 
     @Test
     public void TestToString(){
+        RectangularMap map = new RectangularMap(0,5);
         Animal animalDefault = new Animal();
         Animal animal1 = new Animal(new Vector2d(2,5));
-        animal1.move(MoveDirection.LEFT);
+        animal1.move(MoveDirection.LEFT,map);
         Animal animal2 = new Animal(new Vector2d(1,0));
-        animal2.move(MoveDirection.LEFT);
-        animal2.move(MoveDirection.LEFT);
+        animal2.move(MoveDirection.LEFT,map);
+        animal2.move(MoveDirection.LEFT,map);
 
-        String resDefault = "Pozycja: (2,2) Zwrot: Północ";
-        String res1 = "Pozycja: (2,5) Zwrot: Zachód";
-        String res2 = "Pozycja: (1,0) Zwrot: Południe";
+        String resDefault = "N";
+        String res1 = "W";
+        String res2 = "S";
 
         Assertions.assertEquals(resDefault,animalDefault.toString());
         Assertions.assertEquals(res1,animal1.toString());
@@ -40,6 +41,7 @@ public class AnimalTest {
         Assertions.assertFalse(animal1.isAt(position2));
         Assertions.assertFalse(animal2.isAt(Animal.DEFAULT_POSITION));
     }
+/*
     @Test
     public void TestCanMoveTo(){
         Animal animal = new Animal();
@@ -59,48 +61,52 @@ public class AnimalTest {
         Assertions.assertFalse(animal.canMoveTo(wrongPosition3));
         Assertions.assertFalse(animal.canMoveTo(wrongPosition4));
     }
-    @Test
+*/
+@Test
     public void TestMove(){
+        RectangularMap map1 = new RectangularMap(5,5);
+        RectangularMap map2 = new RectangularMap(5,5);
+        RectangularMap map3 = new RectangularMap(5,5);
+        RectangularMap map4 = new RectangularMap(5,5);
+        RectangularMap map5 = new RectangularMap(5,5);
         Animal animalTurn = new Animal();
         Animal animalCannotGoForward=new Animal(new Vector2d(3,4));
         Animal animalGoForward1=new Animal();
         Animal animalGoForward2=new Animal();
-        animalGoForward2.move(MoveDirection.LEFT);
+        animalGoForward2.move(MoveDirection.LEFT,map3);
         Animal animalGoBackward1=new Animal();
         Animal animalGoBackward2 = new Animal();
-        animalGoBackward2.move(MoveDirection.RIGHT);
-        {
-            animalTurn.move(MoveDirection.RIGHT);                                   //skrecanie w prawo
-            Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.EAST);
-            animalTurn.move(MoveDirection.RIGHT);
-            Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.SOUTH);
-            animalTurn.move(MoveDirection.RIGHT);
-            Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.WEST);
-            animalTurn.move(MoveDirection.RIGHT);
-            Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.NORTH);
+        animalGoBackward2.move(MoveDirection.RIGHT,map5);
+        animalTurn.move(MoveDirection.RIGHT,map1);                                   //skrecanie w prawo
+        Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.EAST);
+        animalTurn.move(MoveDirection.RIGHT,map1);
+        Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.SOUTH);
+        animalTurn.move(MoveDirection.RIGHT,map1);
+        Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.WEST);
+        animalTurn.move(MoveDirection.RIGHT,map1);
+        Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.NORTH);
+        animalTurn.move(MoveDirection.LEFT,map1);                                     //skrecanie w lewo
+        Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.WEST);
+        animalTurn.move(MoveDirection.LEFT,map1);
+        Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.SOUTH);
+        animalTurn.move(MoveDirection.LEFT,map1);
+        Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.EAST);
+        animalTurn.move(MoveDirection.LEFT,map1);
+        Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.NORTH);
 
-            animalTurn.move(MoveDirection.LEFT);                                     //skrecanie w lewo
-            Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.WEST);
-            animalTurn.move(MoveDirection.LEFT);
-            Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.SOUTH);
-            animalTurn.move(MoveDirection.LEFT);
-            Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.EAST);
-            animalTurn.move(MoveDirection.LEFT);
-            Assertions.assertEquals(animalTurn.getOrientation(), MapDirection.NORTH);
-        }
-        animalCannotGoForward.move(MoveDirection.FORWARD);
+        animalCannotGoForward.move(MoveDirection.FORWARD,map2);
         Assertions.assertTrue(animalCannotGoForward.isAt(new Vector2d(3,4)));
 
-        animalGoForward1.move(MoveDirection.FORWARD);
+        animalGoForward1.move(MoveDirection.FORWARD,map3);
         Assertions.assertTrue(animalGoForward1.isAt(new Vector2d(2,3)));
 
-        animalGoForward2.move(MoveDirection.FORWARD);
+        animalGoForward2.move(MoveDirection.FORWARD,map3);
         Assertions.assertTrue(animalGoForward2.isAt(new Vector2d(1,2)));
 
-        animalGoBackward1.move(MoveDirection.BACKWARD);
+        animalGoBackward1.move(MoveDirection.BACKWARD,map4);
         Assertions.assertTrue(animalGoBackward1.isAt(new Vector2d(2,1)));
 
-        animalGoBackward2.move(MoveDirection.BACKWARD);
+        animalGoBackward2.move(MoveDirection.BACKWARD,map5);
         Assertions.assertTrue(animalGoBackward2.isAt(new Vector2d(1,2)));
     }
 }

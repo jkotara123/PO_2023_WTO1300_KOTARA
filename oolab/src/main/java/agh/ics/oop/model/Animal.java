@@ -18,28 +18,33 @@ public class Animal {
     public MapDirection getOrientation() {
         return this.orientation;
     }
+    public Vector2d getPosition() {
+        return position;
+    }
 
     @Override
     public String toString(){
-        return "Pozycja: "+this.position+" Zwrot: "+this.orientation;
+        return switch(orientation){
+            case NORTH -> "N";
+            case EAST -> "E";
+            case SOUTH -> "S";
+            case WEST -> "W";
+        };
     }
     public boolean isAt(Vector2d position){
         return this.position.equals(position);
     }
-    public boolean canMoveTo(Vector2d newPosition){
-        return newPosition.follows(World.WORLD_LOWER_LEFT) && newPosition.precedes(World.WORLD_UPPER_RIGHT);
-    }
-    public void move(MoveDirection direction){
+    public void move(MoveDirection direction,MoveValidator validator){
         switch (direction){
             case LEFT ->  this.orientation=this.orientation.previous();
             case RIGHT -> this.orientation=this.orientation.next();
             case FORWARD -> {
                 Vector2d newPosition = this.position.add(this.orientation.toUnitVector());
-                if (this.canMoveTo(newPosition))    this.position=newPosition;
+                if (validator.canMoveTo(newPosition)) this.position = newPosition;
             }
             case BACKWARD -> {
                 Vector2d newPosition = this.position.subtract(this.orientation.toUnitVector());
-                if (this.canMoveTo(newPosition))    this.position=newPosition;
+                if (validator.canMoveTo(newPosition))    this.position=newPosition;
             }
         }
     }
