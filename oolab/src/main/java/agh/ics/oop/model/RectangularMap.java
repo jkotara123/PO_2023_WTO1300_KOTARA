@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RectangularMap implements WorldMap {
-    Map<Vector2d, Animal> animals = new HashMap<>();
+    private final Map<Vector2d, Animal> animals = new HashMap<>();
     private final Vector2d upperRight;
     private final Vector2d lowerLeft;
-
+    private final MapVisualizer map = new MapVisualizer(this);
     public RectangularMap(int width,int height){
         upperRight=new Vector2d(width-1,height-1);
         lowerLeft=new Vector2d(0,0);
@@ -51,7 +51,6 @@ public class RectangularMap implements WorldMap {
 
     @Override
     public String toString() {
-        MapVisualizer map = new MapVisualizer(this);
         return map.draw(lowerLeft,upperRight);
     }
 }
