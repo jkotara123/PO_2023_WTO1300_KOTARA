@@ -7,12 +7,12 @@ import java.util.Map;
 
 public class RectangularMap implements WorldMap {
     private final Map<Vector2d, Animal> animals = new HashMap<>();
-    private final Vector2d upperRight;
-    private final Vector2d lowerLeft;
+    private final Vector2d worldUpperRight;
+    private final Vector2d worldLowerLeft;
     private final MapVisualizer map = new MapVisualizer(this);
     public RectangularMap(int width,int height){
-        upperRight=new Vector2d(width-1,height-1);
-        lowerLeft=new Vector2d(0,0);
+        worldUpperRight=new Vector2d(width-1,height-1);
+        worldLowerLeft=new Vector2d(0,0);
     }
 
     @Override
@@ -33,24 +33,23 @@ public class RectangularMap implements WorldMap {
         }
     }
 
-
     @Override
     public boolean isOccupied(Vector2d position) {
         return animals.containsKey(position);
     }
 
     @Override
-    public Animal objectAt(Vector2d position) {
+    public WorldElement objectAt(Vector2d position) {
         return animals.get(position);
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return !isOccupied(position) && position.follows(lowerLeft) && position.precedes(upperRight);
+        return !isOccupied(position) && position.follows(worldLowerLeft) && position.precedes(worldUpperRight);
     }
 
     @Override
     public String toString() {
-        return map.draw(lowerLeft,upperRight);
+        return map.draw(worldLowerLeft,worldUpperRight);
     }
 }

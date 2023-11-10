@@ -2,7 +2,7 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.World;
 
-public class Animal {
+public class Animal implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
     static final Vector2d DEFAULT_POSITION=new Vector2d(2,2);
@@ -14,10 +14,10 @@ public class Animal {
     public Animal(){
         this(DEFAULT_POSITION);
     }
-
     public MapDirection getOrientation() {
         return this.orientation;
     }
+    @Override
     public Vector2d getPosition() {
         return position;
     }
@@ -31,6 +31,7 @@ public class Animal {
             case WEST -> "W";
         };
     }
+    @Override
     public boolean isAt(Vector2d position){
         return this.position.equals(position);
     }
