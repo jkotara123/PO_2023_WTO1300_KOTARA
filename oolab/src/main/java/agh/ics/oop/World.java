@@ -8,8 +8,8 @@ import java.util.List;
 
 public class World {
     public static void main(String[] args){
-        ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4)));
-        GrassField map = new GrassField(10);
+        ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(0,0), new Vector2d(3,4)));
+        GrassField map = new GrassField(7);
         Simulation simulation = new Simulation(OptionsParser.change(args),positions,map);
         simulation.run();
     }
