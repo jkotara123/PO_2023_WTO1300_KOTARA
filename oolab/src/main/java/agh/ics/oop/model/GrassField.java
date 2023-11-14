@@ -14,15 +14,12 @@ public class GrassField extends AbstractWorldMap implements WorldMap{
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
     private final Vector2d grassUpperRight;
     private final Vector2d grassLowerLeft;
-    private static final Vector2d LOWER_LEFT_MIN=new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE);
-    private static final Vector2d UPPER_RIGHT_MAX=new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
-
     public GrassField(int n){
         this(n,new Random());
     }
     public GrassField(int n,Random seed){
         worldUpperRight= new Vector2d(0, 0); // to tylko wstepne wartosci
-        worldLowerLeft= new Vector2d((int) (sqrt(n * 10)), (int) (sqrt(n * 10)));
+        worldLowerLeft= new Vector2d((int)(sqrt(n * 10)),(int) (sqrt(n * 10)));
 
         RandomPositionsGenerator randomPositionsGenerator = new RandomPositionsGenerator(worldLowerLeft.getX(),worldLowerLeft.getY(),n,seed);
         for(Vector2d grassPosition : randomPositionsGenerator){
@@ -61,10 +58,6 @@ public class GrassField extends AbstractWorldMap implements WorldMap{
             return grasses.get(position);
         }
         return super.objectAt(position);
-    }
-    @Override
-    public boolean canMoveTo(Vector2d position) {
-        return !isOccupied(position) && position.follows(LOWER_LEFT_MIN) && position.precedes(UPPER_RIGHT_MAX);
     }
 
     @Override

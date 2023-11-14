@@ -44,6 +44,9 @@ public abstract class AbstractWorldMap implements WorldMap{
     public String toString() {
         return map.draw(worldLowerLeft,worldUpperRight);
     }
+    public boolean canMoveTo(Vector2d position) {
+        return !isOccupied(position);
+    }
 
     @Override
     public ArrayList<WorldElement> getElements() {
