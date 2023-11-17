@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SimulationTest {
     @Test
@@ -22,6 +23,12 @@ public class SimulationTest {
         RectangularMap map2 = new RectangularMap(5,5);
         Simulation simulation2 = new Simulation(directions2,positions2,map2);
 
+        GrassField map3 = new GrassField(3,new Random(5));
+        Simulation simulation3 = new Simulation(directions1,positions1,map3);
+
+        GrassField map4 = new GrassField(3,new Random(2));
+        Simulation simulation4 = new Simulation(directions2,positions2,map4);
+
 
         simulation1.run();
         Assertions.assertTrue(simulation1.getAnimal(0).isAt(new Vector2d(2,0)));
@@ -36,5 +43,20 @@ public class SimulationTest {
         Assertions.assertEquals(simulation2.getAnimal(1).getOrientation(),MapDirection.EAST);
         Assertions.assertTrue(simulation2.getAnimal(2).isAt(new Vector2d(4,3)));
         Assertions.assertEquals(simulation2.getAnimal(2).getOrientation(),MapDirection.SOUTH);
+
+        simulation3.run();
+        Assertions.assertTrue(simulation3.getAnimal(0).isAt(new Vector2d(2,-1)));
+        Assertions.assertEquals(simulation3.getAnimal(0).getOrientation(), MapDirection.SOUTH);
+        Assertions.assertTrue(simulation3.getAnimal(1).isAt(new Vector2d(3,7)));
+        Assertions.assertEquals(simulation3.getAnimal(1).getOrientation(),MapDirection.NORTH);
+        Assertions.assertTrue(map3.objectAt(new Vector2d(4,5)) instanceof Grass);
+
+        simulation4.run();
+        Assertions.assertTrue(simulation4.getAnimal(0).isAt(new Vector2d(3,3)));
+        Assertions.assertEquals(simulation4.getAnimal(0).getOrientation(),MapDirection.WEST);
+        Assertions.assertTrue(simulation4.getAnimal(1).isAt(new Vector2d(2,5)));
+        Assertions.assertEquals(simulation4.getAnimal(1).getOrientation(),MapDirection.EAST);
+        Assertions.assertTrue(simulation4.getAnimal(2).isAt(new Vector2d(4,3)));
+        Assertions.assertEquals(simulation4.getAnimal(2).getOrientation(),MapDirection.SOUTH);
     }
 }

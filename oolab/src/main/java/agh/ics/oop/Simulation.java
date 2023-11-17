@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Simulation {
     private final ArrayList<MoveDirection> moveList;
     private final ArrayList<Animal> animalList = new ArrayList<>(0);
-    private final RectangularMap map;
-    public Simulation(ArrayList<MoveDirection> moveList, ArrayList<Vector2d> positionList,RectangularMap map){
+    private final WorldMap map;
+    public Simulation(ArrayList<MoveDirection> moveList, ArrayList<Vector2d> positionList,WorldMap map){
         this.moveList=moveList;
         this.map=map;
         for(Vector2d position : positionList) {
