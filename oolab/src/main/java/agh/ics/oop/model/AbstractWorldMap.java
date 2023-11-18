@@ -8,17 +8,8 @@ import java.util.Map;
 
 public abstract class AbstractWorldMap implements WorldMap{
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
-    protected Vector2d worldUpperRight;
-    protected Vector2d worldLowerLeft;
     protected MapVisualizer map = new MapVisualizer(this);
 
-    public AbstractWorldMap(int width,int height){
-        worldUpperRight=new Vector2d(width-1,height-1);
-        worldLowerLeft=new Vector2d(0,0);
-    }
-    public AbstractWorldMap(){
-        this(5,5);
-    }
     public void move(Animal animal, MoveDirection direction) {
         if(objectAt(animal.getPosition())==animal){
             this.animals.remove(animal.getPosition());
@@ -26,6 +17,9 @@ public abstract class AbstractWorldMap implements WorldMap{
             this.place(animal);
         }
     }
+
+    public Vector2d getWorldUpperRight() {return new Vector2d(5,5);}
+    public Vector2d getWorldLowerLeft(){return new Vector2d(0,0);}
 
     public boolean place(Animal animal) {
         if(canMoveTo(animal.getPosition())){
@@ -42,7 +36,7 @@ public abstract class AbstractWorldMap implements WorldMap{
     }
     @Override
     public String toString() {
-        return map.draw(worldLowerLeft,worldUpperRight);
+        return map.draw(this.getWorldLowerLeft(),this.getWorldUpperRight());
     }
     public boolean canMoveTo(Vector2d position) {
         return !isOccupied(position);

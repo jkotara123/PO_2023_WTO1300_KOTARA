@@ -4,7 +4,7 @@ import java.util.*;
 
 public class RandomPositionsGenerator implements Iterable<Vector2d> {
     private final ArrayList<Vector2d> points;
-    Random rand;
+
     public RandomPositionsGenerator(int maxWidth, int maxHeight, int grassCount){
         this(maxWidth,maxHeight,grassCount,new Random());
     }
@@ -21,7 +21,6 @@ public class RandomPositionsGenerator implements Iterable<Vector2d> {
         for(int i=0;i<grassCount;i++){
             points.add(allPoints.get(i));
         }
-        this.rand=rand;
     }
 
     @Override

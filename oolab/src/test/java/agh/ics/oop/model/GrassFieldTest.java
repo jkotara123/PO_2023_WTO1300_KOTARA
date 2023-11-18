@@ -32,16 +32,16 @@ public class GrassFieldTest {
         Animal animal3 = new Animal(new Vector2d(4,3));
         Animal animal4 = new Animal(new Vector2d(2,1));
 
-        assertEquals(new Vector2d(2,1),map.worldLowerLeft);
-        assertEquals(new Vector2d(4,2),map.worldUpperRight);
+        assertEquals(new Vector2d(2,1),map.getWorldLowerLeft());
+        assertEquals(new Vector2d(4,2),map.getWorldUpperRight());
 
         map.place(animal1);
         map.place(animal2);
         map.place(animal3);
         map.place(animal4);
 
-        assertEquals(new Vector2d(2,1),map.worldLowerLeft);
-        assertEquals(new Vector2d(4,3),map.worldUpperRight);
+        assertEquals(new Vector2d(2,1),map.getWorldLowerLeft());
+        assertEquals(new Vector2d(4,3),map.getWorldUpperRight());
 
         map.move(animal1,MoveDirection.FORWARD);
         assertTrue(animal1.isAt(new Vector2d(2,3)));
@@ -67,8 +67,8 @@ public class GrassFieldTest {
         map.move(animal2,MoveDirection.FORWARD);
         assertTrue(animal2.isAt(new Vector2d(2,1)));
 
-        assertEquals(new Vector2d(2,0),map.worldLowerLeft);
-        assertEquals(new Vector2d(5,3),map.worldUpperRight);
+        assertEquals(new Vector2d(2,0),map.getWorldLowerLeft());
+        assertEquals(new Vector2d(5,3),map.getWorldUpperRight());
     }
     @Test
     public void TestIsOccupied(){
