@@ -1,6 +1,9 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.enums.MapDirection;
+import agh.ics.oop.model.enums.MoveDirection;
+import agh.ics.oop.model.util.OptionsParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

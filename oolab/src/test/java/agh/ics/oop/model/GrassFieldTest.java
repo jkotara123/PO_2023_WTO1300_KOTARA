@@ -1,6 +1,8 @@
 package agh.ics.oop.model;
 
-import org.junit.jupiter.api.Assertions;
+import agh.ics.oop.model.enums.MapDirection;
+import agh.ics.oop.model.enums.MoveDirection;
+import agh.ics.oop.model.exceptions.IllegalPositionException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -10,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class GrassFieldTest {
     @Test
-    public void TestPlace(){
+    public void TestPlace() throws IllegalPositionException{
         GrassField map = new GrassField(5);
 
         Vector2d v1 = new Vector2d(2,2);
@@ -18,32 +20,32 @@ public class GrassFieldTest {
         Animal animal1 = new Animal(v1);
         Animal animal2 = new Animal(v2);
 
-        assertTrue(map.place(animal1));
-        assertTrue(map.place(animal2));
+        map.place(animal1);
+        map.place(animal2);
 
         assertTrue(animal1.isAt(v1));
         assertTrue(animal2.isAt(v2));
     }
     @Test
-    public void TestMove(){
+    public void TestMove() throws IllegalPositionException{
         GrassField map = new GrassField(2,new Random(150));
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(new Vector2d(3, 1));
         Animal animal3 = new Animal(new Vector2d(4,3));
         Animal animal4 = new Animal(new Vector2d(2,1));
 
-        assertEquals(new Vector2d(2,1),map.getWorldLowerLeft());
-        assertEquals(new Vector2d(4,2),map.getWorldUpperRight());
+        assertEquals(new Vector2d(2,1),map.getCurrentBounds().lowerLeft());
+        assertEquals(new Vector2d(4,2),map.getCurrentBounds().upperRight());
 
         map.place(animal1);
         map.place(animal2);
         map.place(animal3);
         map.place(animal4);
 
-        assertEquals(new Vector2d(2,1),map.getWorldLowerLeft());
-        assertEquals(new Vector2d(4,3),map.getWorldUpperRight());
+        assertEquals(new Vector2d(2,1),map.getCurrentBounds().lowerLeft());
+        assertEquals(new Vector2d(4,3),map.getCurrentBounds().upperRight());
 
-        map.move(animal1,MoveDirection.FORWARD);
+        map.move(animal1, MoveDirection.FORWARD);
         assertTrue(animal1.isAt(new Vector2d(2,3)));
         assertEquals(MapDirection.NORTH,animal1.getOrientation());
 
@@ -67,11 +69,11 @@ public class GrassFieldTest {
         map.move(animal2,MoveDirection.FORWARD);
         assertTrue(animal2.isAt(new Vector2d(2,1)));
 
-        assertEquals(new Vector2d(2,0),map.getWorldLowerLeft());
-        assertEquals(new Vector2d(5,3),map.getWorldUpperRight());
+        assertEquals(new Vector2d(2,0),map.getCurrentBounds().lowerLeft());
+        assertEquals(new Vector2d(5,3),map.getCurrentBounds().upperRight());
     }
     @Test
-    public void TestIsOccupied(){
+    public void TestIsOccupied() throws IllegalPositionException{
         Vector2d vec1 = new Vector2d(2,2);
         Vector2d vec2 = new Vector2d(3,1);
         Vector2d vec3 = new Vector2d(3,2);
@@ -98,7 +100,7 @@ public class GrassFieldTest {
         assertTrue(map.isOccupied(vec3));
     }
     @Test
-    public void TestObjectAt(){
+    public void TestObjectAt() throws IllegalPositionException{
         Vector2d vec1 = new Vector2d(2,2);
         Vector2d vec2 = new Vector2d(3,1);
         Vector2d vec3 = new Vector2d(3,2);
@@ -128,7 +130,7 @@ public class GrassFieldTest {
         assertNotEquals(map2.objectAt(vec1),animal1);
     }
     @Test
-    public void TestCanMoveTo(){
+    public void TestCanMoveTo() throws IllegalPositionException{
         GrassField map1 = new GrassField(5,new Random(100));
         System.out.println(map1);
         Vector2d vec1 = new Vector2d(2,2);

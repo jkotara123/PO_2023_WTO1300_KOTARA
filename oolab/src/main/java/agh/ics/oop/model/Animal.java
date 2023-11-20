@@ -1,5 +1,10 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.enums.MapDirection;
+import agh.ics.oop.model.enums.MoveDirection;
+import agh.ics.oop.model.interfaces.MoveValidator;
+import agh.ics.oop.model.interfaces.WorldElement;
+
 public class Animal implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
@@ -22,17 +27,17 @@ public class Animal implements WorldElement {
     @Override
     public String toString(){
         return switch(orientation){
-            case NORTH -> "N";
-            case EAST -> "E";
-            case SOUTH -> "S";
-            case WEST -> "W";
+            case NORTH -> "^";
+            case EAST -> ">";
+            case SOUTH -> "v";
+            case WEST -> "<";
         };
     }
     @Override
     public boolean isAt(Vector2d position){
         return this.position.equals(position);
     }
-    public void move(MoveDirection direction,MoveValidator validator){
+    public void move(MoveDirection direction, MoveValidator validator){
         switch (direction){
             case LEFT ->  this.orientation=this.orientation.previous();
             case RIGHT -> this.orientation=this.orientation.next();
