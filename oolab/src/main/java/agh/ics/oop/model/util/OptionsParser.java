@@ -3,7 +3,7 @@ import agh.ics.oop.model.enums.MoveDirection;
 import java.util.ArrayList;
 
 public class OptionsParser {
-    public static ArrayList<MoveDirection> change(String[] args){
+    public static ArrayList<MoveDirection> change(String[] args) throws IllegalArgumentException{
         ArrayList<MoveDirection> res = new ArrayList<>(0);
         for(String argument : args){
             switch (argument) {

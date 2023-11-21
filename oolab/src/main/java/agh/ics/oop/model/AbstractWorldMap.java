@@ -3,7 +3,6 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.enums.MoveDirection;
 import agh.ics.oop.model.exceptions.IllegalPositionException;
 import agh.ics.oop.model.interfaces.MapChangeListener;
-import agh.ics.oop.model.interfaces.Observable;
 import agh.ics.oop.model.interfaces.WorldElement;
 import agh.ics.oop.model.interfaces.WorldMap;
 import agh.ics.oop.model.util.MapVisualizer;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractWorldMap implements WorldMap, Observable {
+public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected MapVisualizer map = new MapVisualizer(this);
     protected final ArrayList<MapChangeListener> observers = new ArrayList<>();
@@ -23,7 +22,7 @@ public abstract class AbstractWorldMap implements WorldMap, Observable {
     public void removeObserver(MapChangeListener observer){
         observers.remove(observer);
     }
-    public void emitMessage(String message){
+    private void emitMessage(String message){
         for(MapChangeListener observer : observers){
             observer.mapChanged(this,message);
         }
@@ -69,6 +68,7 @@ public abstract class AbstractWorldMap implements WorldMap, Observable {
     public abstract Boundary getCurrentBounds();
     @Override
     public String toString() {
-        return map.draw(this.getCurrentBounds().lowerLeft(), this.getCurrentBounds().upperRight());
+        Boundary bounds = getCurrentBounds();
+        return map.draw(bounds.lowerLeft(), bounds.upperRight());
     }
 }

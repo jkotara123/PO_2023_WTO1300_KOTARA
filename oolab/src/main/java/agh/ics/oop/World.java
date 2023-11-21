@@ -9,12 +9,16 @@ import java.util.List;
 
 public class World {
     public static void main(String[] args){
-        ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(2,8), new Vector2d(3,4)));
-        ConsoleMapDisplay mapDisplay = new ConsoleMapDisplay();
-        GrassField map = new GrassField(9);
-        map.addObserver(mapDisplay);
-
-        Simulation simulation = new Simulation(OptionsParser.change(args),positions,map);
-        simulation.run();
+        try {
+            ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(2, 8), new Vector2d(3, 4),new Vector2d(2,8)));
+            ConsoleMapDisplay mapDisplay = new ConsoleMapDisplay();
+            GrassField map = new GrassField(9);
+            map.addObserver(mapDisplay);
+            Simulation simulation = new Simulation(OptionsParser.change(args), positions, map);
+            simulation.run();
+        }
+        catch (IllegalArgumentException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }
