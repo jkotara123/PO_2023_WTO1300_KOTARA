@@ -1,38 +1,55 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.enums.MoveDirection;
+import agh.ics.oop.model.exceptions.IllegalPositionException;
+import agh.ics.oop.model.interfaces.MapChangeListener;
+import agh.ics.oop.model.interfaces.WorldElement;
+import agh.ics.oop.model.interfaces.WorldMap;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractWorldMap implements WorldMap{
+public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
-    protected Vector2d worldUpperRight;
-    protected Vector2d worldLowerLeft;
     protected MapVisualizer map = new MapVisualizer(this);
+    protected final ArrayList<MapChangeListener> observers = new ArrayList<>();
 
-    public AbstractWorldMap(int width,int height){
-        worldUpperRight=new Vector2d(width-1,height-1);
-        worldLowerLeft=new Vector2d(0,0);
+    public void addObserver(MapChangeListener observer){
+        observers.add(observer);
     }
-    public AbstractWorldMap(){
-        this(5,5);
+    public void removeObserver(MapChangeListener observer){
+        observers.remove(observer);
     }
-    public void move(Animal animal, MoveDirection direction) {
+    private void emitMessage(String message){
+        for(MapChangeListener observer : observers){
+            observer.mapChanged(this,message);
+        }
+    }
+    public void move(Animal animal, MoveDirection direction){
         if(objectAt(animal.getPosition())==animal){
+            Vector2d oldPosition = animal.getPosition();
             this.animals.remove(animal.getPosition());
             animal.move(direction,this);
-            this.place(animal);
+            this.animals.put(animal.getPosition(),animal);
+
+            switch (direction){
+                case FORWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal+" ruszył do przodu");}
+                case BACKWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal+" ruszył do tyłu");}
+                case RIGHT -> emitMessage("Zwierzak "+animal+" obrócił się w prawo");
+                case LEFT -> emitMessage("Zwierzak "+animal+" obrócił się w lewo");
+            }
         }
     }
-
-    public boolean place(Animal animal) {
+    public void place(Animal animal) throws IllegalPositionException{
         if(canMoveTo(animal.getPosition())){
             animals.put(animal.getPosition(),animal);
-            return true;
+            emitMessage("Zwierzak dodany na pozycję "+animal.getPosition());
         }
-        return false;
+        else{
+            throw new IllegalPositionException(animal.getPosition());
+        }
     }
     public boolean isOccupied(Vector2d position) {
         return animals.containsKey(position);
@@ -40,16 +57,18 @@ public abstract class AbstractWorldMap implements WorldMap{
     public WorldElement objectAt(Vector2d position) {
         return animals.get(position);
     }
-    @Override
-    public String toString() {
-        return map.draw(worldLowerLeft,worldUpperRight);
-    }
     public boolean canMoveTo(Vector2d position) {
         return !isOccupied(position);
     }
-
     @Override
     public ArrayList<WorldElement> getElements() {
         return new ArrayList<>(animals.values());
+    }
+    @Override
+    public abstract Boundary getCurrentBounds();
+    @Override
+    public String toString() {
+        Boundary bounds = getCurrentBounds();
+        return map.draw(bounds.lowerLeft(), bounds.upperRight());
     }
 }

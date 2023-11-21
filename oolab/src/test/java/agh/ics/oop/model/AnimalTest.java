@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.World;
+import agh.ics.oop.model.enums.MapDirection;
+import agh.ics.oop.model.enums.MoveDirection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,15 +11,17 @@ public class AnimalTest {
     public void TestToString(){
         RectangularMap map = new RectangularMap(0,5);
         Animal animalDefault = new Animal();
+
         Animal animal1 = new Animal(new Vector2d(2,5));
         animal1.move(MoveDirection.LEFT,map);
+
         Animal animal2 = new Animal(new Vector2d(1,0));
         animal2.move(MoveDirection.LEFT,map);
         animal2.move(MoveDirection.LEFT,map);
 
-        String resDefault = "N";
-        String res1 = "W";
-        String res2 = "S";
+        String resDefault = "^";
+        String res1 = "<";
+        String res2 = "v";
 
         Assertions.assertEquals(resDefault,animalDefault.toString());
         Assertions.assertEquals(res1,animal1.toString());
@@ -41,27 +44,6 @@ public class AnimalTest {
         Assertions.assertFalse(animal1.isAt(position2));
         Assertions.assertFalse(animal2.isAt(Animal.DEFAULT_POSITION));
     }
-/*
-    @Test
-    public void TestCanMoveTo(){
-        Animal animal = new Animal();
-        Vector2d okayPosition1 = new Vector2d(3,4);
-        Vector2d wrongPosition1 = new Vector2d(0,-1);
-        Vector2d wrongPosition2 = new Vector2d(-3,-2);
-        Vector2d wrongPosition3 = new Vector2d(4,6);
-        Vector2d wrongPosition4 = new Vector2d(9,4);
-
-        Assertions.assertTrue(animal.canMoveTo(okayPosition1));
-        Assertions.assertTrue(animal.canMoveTo(Animal.DEFAULT_POSITION));
-        Assertions.assertTrue(animal.canMoveTo(World.WORLD_LOWER_LEFT));
-        Assertions.assertTrue(animal.canMoveTo(World.WORLD_UPPER_RIGHT));
-
-        Assertions.assertFalse(animal.canMoveTo(wrongPosition1));
-        Assertions.assertFalse(animal.canMoveTo(wrongPosition2));
-        Assertions.assertFalse(animal.canMoveTo(wrongPosition3));
-        Assertions.assertFalse(animal.canMoveTo(wrongPosition4));
-    }
-*/
 @Test
     public void TestMove(){
         RectangularMap map1 = new RectangularMap(5,5);

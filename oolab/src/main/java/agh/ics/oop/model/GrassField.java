@@ -1,6 +1,10 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.MapVisualizer;
+import agh.ics.oop.model.enums.MoveDirection;
+import agh.ics.oop.model.exceptions.IllegalPositionException;
+import agh.ics.oop.model.interfaces.WorldElement;
+import agh.ics.oop.model.interfaces.WorldMap;
+import agh.ics.oop.model.util.RandomPositionsGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,48 +13,45 @@ import java.util.Random;
 
 import static java.lang.Math.sqrt;
 
-public class GrassField extends AbstractWorldMap implements WorldMap{
-
+public class GrassField extends AbstractWorldMap implements WorldMap {
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
-    private final Vector2d grassUpperRight;
-    private final Vector2d grassLowerLeft;
+    private Boundary worldBounds;
+    private final Boundary grassBounds;
+
     public GrassField(int n){
         this(n,new Random());
     }
     public GrassField(int n,Random seed){
-        worldUpperRight= new Vector2d(0, 0); // to tylko wstepne wartosci
-        worldLowerLeft= new Vector2d((int)(sqrt(n * 10)),(int) (sqrt(n * 10)));
+        Vector2d worldUpperRight = new Vector2d(0, 0);
+        Vector2d worldLowerLeft = new Vector2d((int)(sqrt(n * 10)),(int) (sqrt(n * 10)));
 
-        RandomPositionsGenerator randomPositionsGenerator = new RandomPositionsGenerator(worldLowerLeft.getX(),worldLowerLeft.getY(),n,seed);
+        RandomPositionsGenerator randomPositionsGenerator = new RandomPositionsGenerator(worldLowerLeft.x(),worldLowerLeft.y(),n,seed);
         for(Vector2d grassPosition : randomPositionsGenerator){
             grasses.put(grassPosition,new Grass(grassPosition));
             worldLowerLeft=worldLowerLeft.lowerLeft(grassPosition);
             worldUpperRight=worldUpperRight.upperRight(grassPosition);
         }
-        grassUpperRight = worldUpperRight;
-        grassLowerLeft = worldLowerLeft;
-    }
-
-    @Override
-    public boolean place(Animal animal) {
-        if(canMoveTo(animal.getPosition())) {
-            worldUpperRight = worldUpperRight.upperRight(animal.getPosition());
-            worldLowerLeft = worldLowerLeft.lowerLeft(animal.getPosition());
-        }
-        return super.place(animal);
+        this.grassBounds=new Boundary(worldLowerLeft,worldUpperRight);
+        this.worldBounds=new Boundary(worldLowerLeft,worldUpperRight);
     }
     @Override
-    public void move(Animal animal, MoveDirection direction) {
+    public void place(Animal animal) throws IllegalPositionException {
+        super.place(animal);
+        updateCorners();
+    }
+    @Override
+    public void move(Animal animal, MoveDirection direction){
         super.move(animal,direction);
         updateCorners();
     }
     public void updateCorners(){
-        worldLowerLeft=grassLowerLeft;
-        worldUpperRight=grassUpperRight;
-        animals.forEach((key,value) -> {
-            worldLowerLeft=worldLowerLeft.lowerLeft(key);
-            worldUpperRight=worldUpperRight.upperRight(key);
-        });
+        Vector2d worldLowerLeft = grassBounds.lowerLeft();
+        Vector2d worldUpperRight = grassBounds.upperRight();
+        for(Vector2d vector : animals.keySet()){
+            worldLowerLeft=worldLowerLeft.lowerLeft(vector);
+            worldUpperRight=worldUpperRight.upperRight(vector);
+        }
+        worldBounds=new Boundary(worldLowerLeft,worldUpperRight);
     }
     @Override
     public WorldElement objectAt(Vector2d position) {
@@ -59,11 +60,14 @@ public class GrassField extends AbstractWorldMap implements WorldMap{
         }
         return super.objectAt(position);
     }
-
     @Override
     public ArrayList<WorldElement> getElements() {
         ArrayList<WorldElement> values = new ArrayList<>(super.getElements());
         values.addAll(grasses.values());
         return values;
+    }
+    @Override
+    public Boundary getCurrentBounds() {
+        return worldBounds;
     }
 }

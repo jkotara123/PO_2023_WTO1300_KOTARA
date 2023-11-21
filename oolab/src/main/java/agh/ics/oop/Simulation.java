@@ -1,6 +1,9 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.enums.MoveDirection;
+import agh.ics.oop.model.exceptions.IllegalPositionException;
+import agh.ics.oop.model.interfaces.WorldMap;
 
 import java.util.ArrayList;
 
@@ -14,12 +17,14 @@ public class Simulation {
         this.map=map;
         for(Vector2d position : positionList) {
             Animal animal = new Animal(position);
-            if (this.map.place(animal)) {
-                this.animalList.add(animal);
+            try{
+                this.map.place(animal);
+                animalList.add(animal);
+            }
+            catch (IllegalPositionException ex){
+                System.out.println(ex.getMessage());
             }
         }
-
-        System.out.println(this.map);
         System.out.println("start...\n\n");
     }
     public Animal getAnimal(int i) {
@@ -29,8 +34,6 @@ public class Simulation {
     public void run(){
         for(int i=0;i < moveList.size();i++){
             this.map.move(this.getAnimal(i%animalList.size()),moveList.get(i));
-            System.out.println("Zwierzak "+i%animalList.size()+": "+this.getAnimal(i%animalList.size()));
-            System.out.println(this.map);
         }
     }
 }
