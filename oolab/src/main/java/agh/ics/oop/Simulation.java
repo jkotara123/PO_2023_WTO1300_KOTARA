@@ -8,7 +8,7 @@ import agh.ics.oop.model.interfaces.WorldMap;
 import java.util.ArrayList;
 
 
-public class Simulation {
+public class Simulation implements Runnable{
     private final ArrayList<MoveDirection> moveList;
     private final ArrayList<Animal> animalList = new ArrayList<>(0);
     private final WorldMap map;
@@ -31,6 +31,7 @@ public class Simulation {
         assert i>=0 && i<animalList.size();
         return animalList.get(i);
     }
+    @Override
     public void run(){
         for(int i=0;i < moveList.size();i++){
             this.map.move(this.getAnimal(i%animalList.size()),moveList.get(i));

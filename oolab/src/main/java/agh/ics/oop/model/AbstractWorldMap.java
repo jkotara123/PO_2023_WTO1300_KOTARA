@@ -10,12 +10,23 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public abstract class AbstractWorldMap implements WorldMap {
-    protected final Map<Vector2d, Animal> animals = new HashMap<>();
-    protected MapVisualizer map = new MapVisualizer(this);
-    protected final ArrayList<MapChangeListener> observers = new ArrayList<>();
+    protected final Map<Vector2d, Animal> animals;
+    protected MapVisualizer map;
+    protected final ArrayList<MapChangeListener> observers;
+    protected final int mapID;
+    public AbstractWorldMap(int mapID){
+        this.animals=new HashMap<>();
+        this.map = new MapVisualizer(this);
+        this.observers = new ArrayList<>();
+        this.mapID=mapID;
+    }
 
+    public int getMapID(){
+        return this.mapID;
+    }
     public void addObserver(MapChangeListener observer){
         observers.add(observer);
     }
@@ -33,12 +44,11 @@ public abstract class AbstractWorldMap implements WorldMap {
             this.animals.remove(animal.getPosition());
             animal.move(direction,this);
             this.animals.put(animal.getPosition(),animal);
-
             switch (direction){
-                case FORWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal+" ruszył do przodu");}
-                case BACKWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal+" ruszył do tyłu");}
-                case RIGHT -> emitMessage("Zwierzak "+animal+" obrócił się w prawo");
-                case LEFT -> emitMessage("Zwierzak "+animal+" obrócił się w lewo");
+                case FORWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal.getPosition()+" ruszył do przodu");}
+                case BACKWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal.getPosition()+" ruszył do tyłu");}
+                case RIGHT -> emitMessage("Zwierzak "+animal.getPosition()+" obrócił się w prawo");
+                case LEFT -> emitMessage("Zwierzak "+animal.getPosition()+" obrócił się w lewo");
             }
         }
     }

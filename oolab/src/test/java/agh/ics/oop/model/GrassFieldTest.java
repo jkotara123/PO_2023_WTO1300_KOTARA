@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class GrassFieldTest {
     @Test
     public void TestPlace() throws IllegalPositionException{
-        GrassField map = new GrassField(5);
+        GrassField map = new GrassField(5,1);
 
         Vector2d v1 = new Vector2d(2,2);
         Vector2d v2 = new Vector2d(100,-100);
@@ -28,7 +28,7 @@ public class GrassFieldTest {
     }
     @Test
     public void TestMove() throws IllegalPositionException{
-        GrassField map = new GrassField(2,new Random(150));
+        GrassField map = new GrassField(2,new Random(150),1);
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(new Vector2d(3, 1));
         Animal animal3 = new Animal(new Vector2d(4,3));
@@ -78,7 +78,7 @@ public class GrassFieldTest {
         Vector2d vec2 = new Vector2d(3,1);
         Vector2d vec3 = new Vector2d(3,2);
 
-        GrassField map = new GrassField(3,new Random(300));
+        GrassField map = new GrassField(3,new Random(300),1);
 
         Animal animal1 = new Animal(vec1);
         Animal animal2 = new Animal(vec2);
@@ -105,8 +105,8 @@ public class GrassFieldTest {
         Vector2d vec2 = new Vector2d(3,1);
         Vector2d vec3 = new Vector2d(3,2);
 
-        GrassField map = new GrassField(3,new Random(100));
-        GrassField map2 = new GrassField(3,new Random(200));
+        GrassField map = new GrassField(3,new Random(100),1);
+        GrassField map2 = new GrassField(3,new Random(200),2);
 
         assertTrue(map.objectAt(vec1) instanceof Grass);
         assertTrue(map.objectAt(new Vector2d(2,0)) instanceof Grass);
@@ -131,7 +131,7 @@ public class GrassFieldTest {
     }
     @Test
     public void TestCanMoveTo() throws IllegalPositionException{
-        GrassField map1 = new GrassField(5,new Random(100));
+        GrassField map1 = new GrassField(5,new Random(100),1);
         System.out.println(map1);
         Vector2d vec1 = new Vector2d(2,2);
         Vector2d vec2 = new Vector2d(3,1);

@@ -31,5 +31,4 @@ public record Vector2d(int x, int y) {
     public Vector2d opposite() {
         return new Vector2d(-this.x, -this.y);
     }
-
 }

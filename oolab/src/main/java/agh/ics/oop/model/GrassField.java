@@ -16,12 +16,13 @@ import static java.lang.Math.sqrt;
 public class GrassField extends AbstractWorldMap implements WorldMap {
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
     private Boundary worldBounds;
-    private final Boundary grassBounds;
+    protected final Boundary grassBounds;
 
-    public GrassField(int n){
-        this(n,new Random());
+    public GrassField(int n, int mapID){
+        this(n, new Random(), mapID);
     }
-    public GrassField(int n,Random seed){
+    public GrassField(int n,Random seed,int mapID){
+        super(mapID);
         Vector2d worldUpperRight = new Vector2d(0, 0);
         Vector2d worldLowerLeft = new Vector2d((int)(sqrt(n * 10)),(int) (sqrt(n * 10)));
 
@@ -37,12 +38,10 @@ public class GrassField extends AbstractWorldMap implements WorldMap {
     @Override
     public void place(Animal animal) throws IllegalPositionException {
         super.place(animal);
-        updateCorners();
     }
     @Override
     public void move(Animal animal, MoveDirection direction){
         super.move(animal,direction);
-        updateCorners();
     }
     public void updateCorners(){
         Vector2d worldLowerLeft = grassBounds.lowerLeft();
@@ -68,6 +67,7 @@ public class GrassField extends AbstractWorldMap implements WorldMap {
     }
     @Override
     public Boundary getCurrentBounds() {
+        updateCorners();
         return worldBounds;
     }
 }

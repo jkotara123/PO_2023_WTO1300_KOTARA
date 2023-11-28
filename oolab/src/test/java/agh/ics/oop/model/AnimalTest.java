@@ -9,7 +9,7 @@ public class AnimalTest {
 
     @Test
     public void TestToString(){
-        RectangularMap map = new RectangularMap(0,5);
+        RectangularMap map = new RectangularMap(0,5,1);
         Animal animalDefault = new Animal();
 
         Animal animal1 = new Animal(new Vector2d(2,5));
@@ -46,11 +46,11 @@ public class AnimalTest {
     }
 @Test
     public void TestMove(){
-        RectangularMap map1 = new RectangularMap(5,5);
-        RectangularMap map2 = new RectangularMap(5,5);
-        RectangularMap map3 = new RectangularMap(5,5);
-        RectangularMap map4 = new RectangularMap(5,5);
-        RectangularMap map5 = new RectangularMap(5,5);
+        RectangularMap map1 = new RectangularMap(5,5,1);
+        RectangularMap map2 = new RectangularMap(5,5,2);
+        RectangularMap map3 = new RectangularMap(5,5,3);
+        RectangularMap map4 = new RectangularMap(5,5,4);
+        RectangularMap map5 = new RectangularMap(5,5,5);
         Animal animalTurn = new Animal();
         Animal animalCannotGoForward=new Animal(new Vector2d(3,4));
         Animal animalGoForward1=new Animal();

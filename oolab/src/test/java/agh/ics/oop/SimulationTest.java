@@ -17,19 +17,19 @@ public class SimulationTest {
         String[] args1 = {"f","b","r","l","f","f","r","r","f","f","f","f","f","f","f","f"};
         ArrayList<MoveDirection> directions1 = OptionsParser.change(args1);
         ArrayList<Vector2d> positions1 = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4)));
-        RectangularMap map1 = new RectangularMap(5,5);
+        RectangularMap map1 = new RectangularMap(5,5,1);
         Simulation simulation1 = new Simulation(directions1,positions1,map1);
 
         String[] args2 = {"f","f","b","l","r","r","b","b","r"};
         ArrayList<MoveDirection> directions2 = OptionsParser.change(args2);
         ArrayList<Vector2d> positions2 = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4),new Vector2d(4,4)));
-        RectangularMap map2 = new RectangularMap(5,5);
+        RectangularMap map2 = new RectangularMap(5,5,2);
         Simulation simulation2 = new Simulation(directions2,positions2,map2);
 
-        GrassField map3 = new GrassField(3,new Random(5));
+        GrassField map3 = new GrassField(3,new Random(5),3);
         Simulation simulation3 = new Simulation(directions1,positions1,map3);
 
-        GrassField map4 = new GrassField(3,new Random(2));
+        GrassField map4 = new GrassField(3,new Random(2),4);
         Simulation simulation4 = new Simulation(directions2,positions2,map4);
 
 
