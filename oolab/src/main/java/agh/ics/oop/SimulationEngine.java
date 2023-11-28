@@ -28,19 +28,18 @@ public class SimulationEngine {
         for (Thread thread : threads){
             thread.start();
         }
-        awaitSimulationEnds();
     }
     public void awaitSimulationEnds() throws InterruptedException {
         for (Thread thread : threads){
             thread.join();
         }
-        executorService.shutdown();
-        executorService.awaitTermination(10, TimeUnit.SECONDS);
+        if(executorService.awaitTermination(10, TimeUnit.SECONDS)){
+            executorService.shutdown();
+        }
     }
     public void runAsyncInThreadPool() throws InterruptedException {
         for (Simulation simulation : simulationList){
             executorService.submit(simulation);
         }
-        awaitSimulationEnds();
     }
 }

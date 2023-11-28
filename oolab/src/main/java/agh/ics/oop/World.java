@@ -16,7 +16,7 @@ public class World {
             GrassField map1 = new GrassField(7,1);
             map1.addObserver(observer);
             Simulation simulation1 = new Simulation(OptionsParser.change(args1), positions1, map1);
-    
+
             String[] args2 = {"f","b","r","l","f","f","r","r","f","f","f","f","f","f","f","f"};
             ArrayList<Vector2d> positions2 = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4)));
             RectangularMap map2 = new RectangularMap(5,5,2);
@@ -25,8 +25,11 @@ public class World {
 
             SimulationEngine simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation1,simulation2)),4);
 
+
+
             simulationEngine.runAsyncInThreadPool();
 
+            simulationEngine.awaitSimulationEnds();
 
             System.out.print("System zakonczyl dzialanie");
         }
