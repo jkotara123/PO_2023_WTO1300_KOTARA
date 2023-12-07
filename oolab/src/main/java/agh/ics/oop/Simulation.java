@@ -6,13 +6,14 @@ import agh.ics.oop.model.exceptions.IllegalPositionException;
 import agh.ics.oop.model.interfaces.WorldMap;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Simulation implements Runnable{
-    private final ArrayList<MoveDirection> moveList;
+    private final List<MoveDirection> moveList;
     private final ArrayList<Animal> animalList = new ArrayList<>(0);
     private final WorldMap map;
-    public Simulation(ArrayList<MoveDirection> moveList, ArrayList<Vector2d> positionList,WorldMap map){
+    public Simulation(List<MoveDirection> moveList, List<Vector2d> positionList, WorldMap map){
         this.moveList=moveList;
         this.map=map;
         for(Vector2d position : positionList) {

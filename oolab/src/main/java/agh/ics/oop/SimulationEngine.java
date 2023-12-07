@@ -33,9 +33,8 @@ public class SimulationEngine {
         for (Thread thread : threads){
             thread.join();
         }
-        if(executorService.awaitTermination(10, TimeUnit.SECONDS)){
             executorService.shutdown();
-        }
+            executorService.awaitTermination(10, TimeUnit.SECONDS);
     }
     public void runAsyncInThreadPool() throws InterruptedException {
         for (Simulation simulation : simulationList){
