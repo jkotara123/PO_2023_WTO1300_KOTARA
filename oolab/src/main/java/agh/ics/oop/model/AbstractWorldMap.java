@@ -45,17 +45,17 @@ public abstract class AbstractWorldMap implements WorldMap {
             animal.move(direction,this);
             this.animals.put(animal.getPosition(),animal);
             switch (direction){
-                case FORWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal.getPosition()+" ruszył do przodu");}
-                case BACKWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal.getPosition()+" ruszył do tyłu");}
-                case RIGHT -> emitMessage("Zwierzak "+animal.getPosition()+" obrócił się w prawo");
-                case LEFT -> emitMessage("Zwierzak "+animal.getPosition()+" obrócił się w lewo");
+                case FORWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal.getPosition()+" ruszyl do przodu");}
+                case BACKWARD -> {if(oldPosition != animal.getPosition()) emitMessage("Zwierzak "+animal.getPosition()+" ruszyl do tylu");}
+                case RIGHT -> emitMessage("Zwierzak "+animal.getPosition()+" obrocil sie w prawo");
+                case LEFT -> emitMessage("Zwierzak "+animal.getPosition()+" obrocil sie w lewo");
             }
         }
     }
     public void place(Animal animal) throws IllegalPositionException{
         if(canMoveTo(animal.getPosition())){
             animals.put(animal.getPosition(),animal);
-            emitMessage("Zwierzak dodany na pozycję "+animal.getPosition());
+            emitMessage("Zwierzak dodany na pozycje "+animal.getPosition());
         }
         else{
             throw new IllegalPositionException(animal.getPosition());

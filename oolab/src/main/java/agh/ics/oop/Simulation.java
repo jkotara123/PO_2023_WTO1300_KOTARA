@@ -26,7 +26,6 @@ public class Simulation implements Runnable{
                 System.out.println(ex.getMessage());
             }
         }
-        System.out.println("start...\n\n");
     }
     public Animal getAnimal(int i) {
         assert i>=0 && i<animalList.size();
@@ -36,6 +35,11 @@ public class Simulation implements Runnable{
     public void run(){
         for(int i=0;i < moveList.size();i++){
             this.map.move(this.getAnimal(i%animalList.size()),moveList.get(i));
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

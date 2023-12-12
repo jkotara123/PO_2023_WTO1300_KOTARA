@@ -19,9 +19,9 @@ public class AnimalTest {
         animal2.move(MoveDirection.LEFT,map);
         animal2.move(MoveDirection.LEFT,map);
 
-        String resDefault = "^";
-        String res1 = "<";
-        String res2 = "v";
+        String resDefault = "N";
+        String res1 = "W";
+        String res2 = "S";
 
         Assertions.assertEquals(resDefault,animalDefault.toString());
         Assertions.assertEquals(res1,animal1.toString());
