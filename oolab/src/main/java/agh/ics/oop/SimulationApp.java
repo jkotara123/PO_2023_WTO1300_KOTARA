@@ -8,10 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class SimulationApp extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws IOException {
         GrassField map = new GrassField(7, 1);
 
         FXMLLoader loader = new FXMLLoader();
