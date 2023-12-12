@@ -27,10 +27,10 @@ public class Animal implements WorldElement {
     @Override
     public String toString(){
         return switch(orientation){
-            case NORTH -> "^";
-            case EAST -> ">";
-            case SOUTH -> "v";
-            case WEST -> "<";
+            case NORTH -> "N";
+            case EAST -> "E";
+            case SOUTH -> "S";
+            case WEST -> "W";
         };
     }
     @Override
